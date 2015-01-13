@@ -1,17 +1,23 @@
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from mortimer.models import AppID
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect
+from django.template import RequestContext, loader
 
-# Leaving this mess for konceptz to clean up :)
 @login_required(redirect_field_name=None,login_url='/login/')
-def home(response):
+def home(request):
     output = ""
     for app in AppID.objects.all():
         output += "<div> name: %s, desc: %s </div><br>" %(app.app_name,app.app_desc)
 
-    return  HttpResponse(output)
+    login_template = loader.get_tempalte('templates/login.htmt')
+    context = RequestContext(request, {})
+
+    return HttpResponse(template.render(context))
+
+    #return  HttpResponse(output)
 
 # Home with out any no login require - Testing purposes only
 def home2(response):
@@ -20,11 +26,15 @@ def home2(response):
         output += "<div> name: %s, desc: %s </div><br>" %(app.app_name,app.app_desc)
 
     return  HttpResponse(output)
-
-def login(response):
+'''
+def login(request):
     # Should take creds in a form that posts to authN
-    return HttpResponse("Test Login Page")
+    login_template = loader.get_template('login.html')
+    context = RequestContext(request, {})
 
+    return HttpResponse(login_template.render(context))
+    #return HttpResponse("Test Login Page")
+'''
 def authN(request):
     # Stolen from django site
     username = request.POST['username']
