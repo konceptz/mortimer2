@@ -3,8 +3,13 @@ from django.contrib import admin
 
 urlpatterns = patterns('',
     # Examples:
-    # url(r'^$', 'mortimer.views.home', name='home'),
+
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^$', 'mortimer.views.home', name='home'),
+    url(r'^home/', 'mortimer.views.home2'),                 # page that skips auth, for now
+    url(r'^login/', 'mortimer.views.login', name='login'),
+    url(r'^logout/', 'mortimer.views.logout', name='logout'),
 )
+
