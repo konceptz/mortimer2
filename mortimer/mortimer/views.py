@@ -17,7 +17,7 @@ def home(request):
 
     return HttpResponse(template.render(context))
 
-    #return  HttpResponse(output)
+#return  HttpResponse(output)
 
 # Home with out any no login require - Testing purposes only
 def home2(response):
@@ -26,15 +26,13 @@ def home2(response):
         output += "<div> name: %s, desc: %s </div><br>" %(app.app_name,app.app_desc)
 
     return  HttpResponse(output)
-'''
+
 def login(request):
-    # Should take creds in a form that posts to authN
     login_template = loader.get_template('login.html')
     context = RequestContext(request, {})
-
     return HttpResponse(login_template.render(context))
-    #return HttpResponse("Test Login Page")
-'''
+
+
 def authN(request):
     # Stolen from django site
     username = request.POST['username']
@@ -50,7 +48,8 @@ def authN(request):
             return HttpResponse("Oops, you're account is disabled")
     else:
         # Return an 'invalid login' error message.
-        return HttpResponse("Bad username and password")
+        #return HttpResponse("Bad username and password")
+        return redirect('/')
 
 def logout_view(request):
     logout(request)

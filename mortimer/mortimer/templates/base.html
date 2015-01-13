@@ -1,13 +1,6 @@
 <!DOCTYPE HTML>
 <HTML>
-    <div>
-        {{ user }}
-        {% if user.is_anonymous %}
-        <a href="{% url 'django.contrib.auth.views.login' %}">Login</a>
-        {% else %}
-        <a href="{% url 'django.contrib.auth.views.logout' %}">Logout</a>
-        {% endif %}
-    </div>
+
     <BODY>
         {% block content %}
         {% endblock %}
