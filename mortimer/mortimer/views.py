@@ -14,17 +14,6 @@ def home(request):
 
     return HttpResponse(output)
 
-
-# Home with out any no login require - Testing purposes only
-'''
-def home2(response):
-    output = ""
-    for app in AppID.objects.all():
-        output += "<div> name: %s, desc: %s </div><br>" %(app.app_name,app.app_desc)
-
-    return  HttpResponse(output)
-'''
-
 def log_in(request):
     login_template = loader.get_template('login.html')
     context = RequestContext(request, {})
