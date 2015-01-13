@@ -8,9 +8,9 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', 'mortimer.views.home', name='home'),
-    url(r'^home/', 'mortimer.views.home2'),                 # page that skips auth, for now
-    url(r'^login/', 'mortimer.views.login', name='login'),
-    url(r'^logout/', 'mortimer.views.logout', name='logout'),
+    url(r'^home/', 'mortimer.views.home'),                 # page that skips auth, for now
+    url(r'^login/', 'mortimer.views.log_in', name='log_in'),
+    url(r'^logout/', 'mortimer.views.logout_view', name='logout_view'),
     url(r'^authN/', 'mortimer.views.authN', name='authN'),
 )
 
