@@ -12,10 +12,10 @@ def home(request):
     for app in AppID.objects.all():
         output += "<div> name: %s, desc: %s </div><br>" %(app.app_name,app.app_desc)
 
-    login_template = loader.get_tempalte('templates/login.htmt')
+    login_template = loader.get_template('login.html')
     context = RequestContext(request, {})
 
-    return HttpResponse(template.render(context))
+    return HttpResponse(login_template.render(context))
 
 #return  HttpResponse(output)
 
@@ -39,13 +39,8 @@ def authN(request):
     password = request.POST['password']
     user = authenticate(username=username, password=password)
     if user is not None:
-        if user.is_active:
-            login(request, user)
-            # Redirect to a success page.
-            return redirect('/')
-        else:
-            # Return a 'disabled account' error message
-            return HttpResponse("Oops, you're account is disabled")
+        print user
+        return redirect('/home/')
     else:
         # Return an 'invalid login' error message.
         #return HttpResponse("Bad username and password")
