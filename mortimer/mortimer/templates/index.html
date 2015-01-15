@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+{% for app in apps %}
+<form>
+    <div>
+        {% csrf_token %}
+        name: {{ app.app_name }}, desc: {{ app.app_desc }},
+        <input type="hidden" name="id" value="{{app.id}}"/>
+        <input id="button" type="submit" value="Show Creds"/>
+        <div id="creds"></div>
+    </div>
+</form>
+    <br>
+{% endfor %}
+
+<a href="/logout">Log Out</a>
+
+
+<script>
+    $("form").submit(function(event){
+        var form = $(this);
+        if(form[0].button.value =="Show Creds"){
+
+            $.post(
+                "/get_creds/",
+                form.serializeArray(),
+                function(response, textStatus, jqXHR){
+                    form[0].childNodes[1].childNodes[7].innerHTML = response;                   //TODO: find better way to do this.
+                });
+            form[0].button.value ="Hide Creds";
+            event.preventDefault();
+        }
+        else{
+            form[0].childNodes[1].childNodes[7].innerHTML = "";                                 //TODO: and this too.
+            form[0].button.value ="Show Creds";
+            event.preventDefault();
+        }
+    });
+
+</script>
+
+{% endblock %}
+
