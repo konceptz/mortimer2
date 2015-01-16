@@ -16,7 +16,7 @@ loginform.addEventListener("submit", function(e){
           setTimeout(function()
           {
             window.location.replace(jsonResponse.redirect);
-          },1500);
+          },1000);
     } 
     else {
       document.getElementById("login_response").innerHTML = "Sorry, but the login information you have entered is invalid";
