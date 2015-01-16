@@ -43,7 +43,7 @@ input[type="text"]:focus, input[type="password"]:focus, textarea:focus
 }
 .main-container
 {
-   background-color: rgba(78, 79, 89, 1);
+   background-color: rgba(93, 94, 107, 1);
    position: fixed;
    top: 30%;
    width: 100%;

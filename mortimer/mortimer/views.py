@@ -65,7 +65,6 @@ def log_in(request):
     return HttpResponse(login_template.render(context))
 
 def authN(request):
-    # Stolen from django site
     username = request.POST['username']
     password = request.POST['password']
     user = authenticate(username=username, password=password)
@@ -78,7 +77,6 @@ def authN(request):
         login(request, user)
         return HttpResponse(json.dumps(json_response), content_type="application/json")
     else:
-        #Lets use the HTTP spec here and respond with an auth fail.
         json_response['redirect'] = "/"
         json_response['authenticated'] = False
         return HttpResponseForbidden(json.dumps(json_response), content_type="application/json")
