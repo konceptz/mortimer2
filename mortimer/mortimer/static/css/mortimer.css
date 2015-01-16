@@ -1,3 +1,76 @@
-h1 {
-    color: black;
+@font-face
+{
+	font-family: Muli;
+	src: url('font/Muli.ttf');
 }
+html, button, input, select, textarea 
+{
+   color: #777;
+   display: block;
+}
+body
+{
+   font-size: 1em;
+   font-family: 'Muli', sans-serif;
+   line-height: 1.4;
+   background-color: #f1f1f1;
+}
+input
+{
+  margin-bottom: 5px;
+}
+input[type="text"], input[type="password"]
+{
+  background-color: white;
+  border: 1px solid #cccccc;
+  box-sizing: border-box;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+  color: #000;
+  color: rgba(0, 0, 0, 0.75);
+  /*display: block;*/
+  font-family: inherit;
+  font-size: 0.875em;
+  height: 2.3125em;
+  margin: 0 0 1em 0;
+  padding: 0 0.5em;
+  transition: box-shadow 0.45s,
+  border-color 0.45s ease-in-out;
+}
+input[type="text"]:focus, input[type="password"]:focus, textarea:focus
+{
+  box-shadow: 0 0 5px #999999;
+  border-color: #999999;
+}
+.main-container
+{
+   background-color: rgba(78, 79, 89, 1);
+   position: fixed;
+   top: 30%;
+   width: 100%;
+   height: 200px;
+   transition: background-color 1s ease-in;
+}
+#loginform
+{
+   display: inline-block;
+   left: 40%;
+   top: 20%;
+   position: relative;
+   
+}
+#login_title
+{
+   color: #FFF;
+   display: inline-block;
+   width: 300px;
+   left: 10%;
+   position: relative;
+}
+.footer
+{
+	position: absolute;
+	width: 100%;
+	bottom: 0;
+	text-align: center;
+}
+

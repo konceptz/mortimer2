@@ -7,18 +7,35 @@
 {% endif %}
 
 
-<form method="post" action="/authN/">
+<div>
+         <div class="main-container">  
+            <div id="login_title">
+               <strong>Welcome to Soteria.</strong>
+               <div id="login_response">Please login to continue to the system</div>
+            </div>
+            <form id="loginform" method="post" onsubmit="javascript:return false;">
+                {% csrf_token %}
+               <input type="text" id="username" name="username" placeholder="User Name">
+               <input type="password" id="password" placeholder="Password">
+               <input type="submit" class="button tiny" id="submit" value="submit">
+            </form>
+         </div>
+      </div>
+           
+
+<!--
+<form id="loginForm" method="post" action="/authN/">
     {% csrf_token %}
-    <!--Login UI here-->
+
     Username:
     <input type="text" name="username"/>
     Password:
     <input type="text" name="password"/>
-    <!-- End Login UI here-->
+
 
     <input type="submit" value="Login"/>
 </form>
-
+-->
 <script src="/static/js/mortimer.login.js"></script>
 
 

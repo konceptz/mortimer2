@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect
 from django.utils.decorators import method_decorator
@@ -74,7 +74,8 @@ def authN(request):
     else:
         # Return an 'invalid login' error message.
         #return HttpResponse("Bad username and password")
-        return redirect('/')
+        #return redirect('/')
+        return HttpResponseForbidden("Credentials Fail")
 
 def logout_view(request):
     logout(request)
