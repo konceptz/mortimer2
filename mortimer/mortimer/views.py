@@ -6,6 +6,7 @@ from mortimer.models import AppID, AppData
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect
 from django.template import RequestContext, loader
+import json
 
 @login_required(redirect_field_name=None,login_url='/login/')
 def home(request):
@@ -68,14 +69,19 @@ def authN(request):
     username = request.POST['username']
     password = request.POST['password']
     user = authenticate(username=username, password=password)
+    json_response = {}
+    json_response['username'] = username
+
     if user is not None:
+        json_response['redirect'] = "/home/"
+        json_response['authenticated'] = True
         login(request, user)
-        return redirect('/home/')
+        return HttpResponse(json.dumps(json_response), content_type="application/json")
     else:
-        # Return an 'invalid login' error message.
-        #return HttpResponse("Bad username and password")
-        #return redirect('/')
-        return HttpResponseForbidden("Credentials Fail")
+        #Lets use the HTTP spec here and respond with an auth fail.
+        json_response['redirect'] = "/"
+        json_response['authenticated'] = False
+        return HttpResponseForbidden(json.dumps(json_response), content_type="application/json")
 
 def logout_view(request):
     logout(request)
