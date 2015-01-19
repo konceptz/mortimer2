@@ -37,7 +37,7 @@ send_creds - allows user to send some or all their creds to another user (clone 
 def get_creds(request):
 
     data_dict = {'creds': []}      # if id doesn't belong to user
-    output = ""
+    # output = ""
     if AppID.objects.get(id=request.POST['id']).app_user == request.user:
         '''
         for c in AppData.objects.filter(app_id=request.POST['id']):
@@ -58,8 +58,9 @@ def create_app(request):
     """
 
     # needs check to see if it already exists
-    if AppID.objects.get(app_user=request.user,app_name=request.POST['name']):
+    if AppID.objects.filter(app_user=request.user,app_name=request.POST['name']).exists():
        return HttpResponse("FAIL")
+
 
     obj = AppID(app_user=request.user,
           app_name=request.POST['name'],
@@ -80,7 +81,10 @@ def remove_app(request):
     :param name:
     :return success/failure message:
     """
-    app = AppID.objects.get(app_user=request.user,app_name=request.POST['name'])
+
+    app = AppID.objects.get(id=request.POST['id'])  #app_user=request.user,app_name=request.POST['name'])
+    if app.app_user != request.user:
+        return HttpResponse("FAIL")
 
     # first clear the appdata table
     try:

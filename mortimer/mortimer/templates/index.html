@@ -11,10 +11,14 @@
         <input type="hidden" name="id" value="{{app.id}}"/>
         <input id="button" type="submit" value="Show Creds"/>
         <div id="creds"></div>
-        <a class="rm" name="{{app.id}}"> Remove Application </a>
     </div>
 </form>
-    <br>
+<form class="remove" action="/remove/" method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="id" value="{{app.id}}"/>
+    <input type="submit" value="Remove Application"/>
+</form>
+<br>
 {% endfor %}
 
 <form id="create" action="/create/" method="POST">
@@ -28,17 +32,6 @@
 <a href="/logout">Log Out</a>
 
 <script>
-    $(".rm").click(function(event){
-        var tag = $(this)[0];
-        console.log(tag.name);
-        $.post(
-            "/remove/",
-            {'name':tag.name},
-            function(response, textStatus, jqXHR){
-                alert(response);
-        });
-    });
-
 
     /*  # Fix post
     $("create").submit(function(event){
