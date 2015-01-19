@@ -4,23 +4,54 @@
 
 
 {% for app in apps %}
-<form>
+<form class="app">
     <div>
         {% csrf_token %}
         name: {{ app.app_name }}, desc: {{ app.app_desc }},
         <input type="hidden" name="id" value="{{app.id}}"/>
         <input id="button" type="submit" value="Show Creds"/>
         <div id="creds"></div>
+        <a class="rm" name="{{app.id}}"> Remove Application </a>
     </div>
 </form>
     <br>
 {% endfor %}
 
+<form id="create" action="/create/" method="POST">
+    {% csrf_token %}
+    <input type="text" name="name" placeholder="App Name"/>
+    <input type="text" name="description" placeholder="App Description"/>
+    <input type="submit" value="Create app"/>
+</form>
+
+<br>
 <a href="/logout">Log Out</a>
 
-
 <script>
-    $("form").submit(function(event){
+    $(".rm").click(function(event){
+        var tag = $(this)[0];
+        console.log(tag.name);
+        $.post(
+            "/remove/",
+            {'name':tag.name},
+            function(response, textStatus, jqXHR){
+                alert(response);
+        });
+    });
+
+
+    /*  # Fix post
+    $("create").submit(function(event){
+        var form = $(this);
+        $.post(
+            "/create/",
+            form.serializeArray(),
+            function(response,textStatus,jqXHR){alert(JSON.parse(response))}
+        );
+        event.preventDefault();
+    });*/
+
+    $(".app").submit(function(event){
         var form = $(this);
         if(form[0].button.value =="Show Creds"){
 
@@ -28,16 +59,17 @@
                 "/get_creds/",
                 form.serializeArray(),
                 function(response, textStatus, jqXHR){
-                    form[0].childNodes[1].childNodes[7].innerHTML = response;                   //TODO: find better way to do this.
+                    var jsonResponse = new Object();
+                    jsonResponse = JSON.parse(response);
+                    form[0].childNodes[1].childNodes[7].innerHTML = JSON.stringify(jsonResponse)               //TODO: find better way to do this.
                 });
             form[0].button.value ="Hide Creds";
-            event.preventDefault();
         }
         else{
             form[0].childNodes[1].childNodes[7].innerHTML = "";                                 //TODO: and this too.
             form[0].button.value ="Show Creds";
-            event.preventDefault();
         }
+        event.preventDefault();
     });
 
 </script>
