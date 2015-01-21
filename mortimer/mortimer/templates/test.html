@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% for app in apps %}
+<form class="app">
+    <div>
+        {% csrf_token %}
+        name: {{ app.app_name }}, desc: {{ app.app_desc }},
+        <input type="hidden" name="id" value="{{app.id}}"/>
+        <input id="button" type="submit" value="Show Creds"/>
+        <div id="creds"></div>
+    </div>
+</form>
+
+<form class="rm">
+    <div>
+        {% csrf_token %}
+        <input type="hidden" name="id" value="{{app.id}}"/>
+        <input type="submit" value="Remove App"/>
+    </div>
+</form>
+{% endfor %}
+
+<br/>
+<form class="mk">
+    <div>
+        {% csrf_token %}
+        <input type="text" name="name" placeholder="App Name"/>
+        <input type="text" name="description" placeholder="App Description"/>
+        <input type="submit" value="Add App"/>
+    </div>
+</form>
+
+<a href="/logout">Log Out</a>
+
+
+<script src="/static/js/app_functions.js"></script>
+
+{% endblock %}
+

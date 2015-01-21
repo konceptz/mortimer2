@@ -9,15 +9,13 @@ from django.shortcuts import redirect
 from django.template import RequestContext, loader
 import json
 
+def test(request):
+    login_template = loader.get_template('test.html')
+    context = RequestContext(request,{'apps':AppID.objects.filter(app_user=request.user)})
+    return HttpResponse(login_template.render(context))
+
 @login_required(redirect_field_name=None,login_url='/login/')
 def home(request):
-    """
-    output = ""
-    for app in AppID.objects.filter(app_user=request.user):
-        output += "<div> name: %s, desc: %s </div><br>" %(app.app_name,app.app_desc)
-    output += """
-
-    # return HttpResponse(output)
 
     login_template = loader.get_template('index.html')
     context = RequestContext(request,{'apps':AppID.objects.filter(app_user=request.user)})
@@ -35,18 +33,16 @@ send_creds - allows user to send some or all their creds to another user (clone 
 @require_POST
 @login_required(redirect_field_name=None,login_url='/error/')
 def get_creds(request):
+    id = request.POST.get('id',None)
+    if not id:
+        return HttpResponse("FAIL")
 
     data_dict = {'creds': []}      # if id doesn't belong to user
-    # output = ""
-    if AppID.objects.get(id=request.POST['id']).app_user == request.user:
-        '''
-        for c in AppData.objects.filter(app_id=request.POST['id']):
-            output += "<div> user: %s, pass: %s </div><br>" %(c.username,c.enc_password)
-    return HttpResponse(output)
-        '''
-        data_dict['creds'] = [creds.as_json() for creds in AppData.objects.filter(app_id=request.POST['id'])]
+    # check if app_id belongs to user requesting it
+    if AppID.objects.get(id=id).app_user == request.user:
+        data_dict['creds'] = [creds.as_json() for creds in AppData.objects.filter(app_id=id)]
 
-    return HttpResponse(json.dumps(data_dict))#,content_type="application/json")    # another bug :(
+    return HttpResponse(json.dumps(data_dict))
 
 @require_POST
 @login_required(redirect_field_name=None,login_url='/error/')
@@ -56,17 +52,22 @@ def create_app(request):
     :params name, description:
     :return success/failure message:
     """
+    username, description = request.POST.get('name',None), request.POST.get('description',None)
 
-    # needs check to see if it already exists
-    if AppID.objects.filter(app_user=request.user,app_name=request.POST['name']).exists():
+    # validity checks - Todo: replace valid with an error msg to display
+    valid = True
+    if (not username) or (not description):
+        valid = False
+    if len(username) > 100 or len(description) > 500:
+        valid = False
+    if AppID.objects.filter(app_user=request.user,app_name=username).exists(): # needs check to see if it already exists
+        valid = False
+
+    if not valid:
        return HttpResponse("FAIL")
 
-
-    obj = AppID(app_user=request.user,
-          app_name=request.POST['name'],
-          app_desc=request.POST['description'])
-
     try:
+        obj = AppID(app_user=request.user,app_name=username,app_desc=description)
         obj.save()
     except:
         return HttpResponse("FAIL")

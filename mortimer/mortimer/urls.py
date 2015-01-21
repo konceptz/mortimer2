@@ -8,6 +8,7 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', 'mortimer.views.home', name='home'),
+    url(r'^test/', 'mortimer.views.test'),
     url(r'^home/', 'mortimer.views.home'),
     url(r'^get_creds/', 'mortimer.views.get_creds'),
     url(r'^create/', 'mortimer.views.create_app'),
