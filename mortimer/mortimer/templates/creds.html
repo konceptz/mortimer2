@@ -1,0 +1,33 @@
+{% for c in creds %}
+<div>
+    <div class="user">Username: {{c.user}}</div>
+    <div class="pass">Password: {{c.pass}}</div>
+
+    <form class="mod_cred">
+        <div>
+            {% csrf_token %}
+            <input type="hidden" name="id" value="{{app_id}}"/>
+            <input type="submit" value="Modify Creds"/>
+        </div>
+    </form>
+    <form class="rm_cred">
+        <div>
+            {% csrf_token %}
+            <input type="hidden" name="app_id" value="{{app_id}}"/>
+            <input type="hidden" name="user" value="{{c.user}}"/>
+            <input type="submit" value="Remove Creds"/>
+        </div>
+    </form>
+</div>
+{% endfor %}
+
+<form class="mk_cred">
+    <div>
+        {% csrf_token %}
+        <input type="hidden" name="app_id" value="{{app_id}}"/>
+        <input type="text" name="user" placeholder="Username"/>
+        <input type="text" name="pass" placeholder="Password"/>
+        <input type="submit" value="Add Creds"/>
+    </div>
+</form>
+

@@ -2,9 +2,6 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 
 urlpatterns = patterns('',
-    # Examples:
-
-    # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', 'mortimer.views.home', name='home'),
@@ -13,7 +10,9 @@ urlpatterns = patterns('',
     url(r'^get_creds/', 'mortimer.views.get_creds'),
     url(r'^create/', 'mortimer.views.create_app'),
     url(r'^remove/', 'mortimer.views.remove_app'),
-    url(r'^modify/', 'mortimer.views.modify_app'),
+    url(r'^create_creds/', 'mortimer.views.create_creds'),
+    url(r'^remove_creds/', 'mortimer.views.remove_creds'),
+    url(r'^modify_creds/', 'mortimer.views.modify_creds'),
     url(r'^error/', 'mortimer.views.error'),
     url(r'^login/', 'mortimer.views.log_in', name='log_in'),
     url(r'^logout/', 'mortimer.views.logout_view', name='logout_view'),

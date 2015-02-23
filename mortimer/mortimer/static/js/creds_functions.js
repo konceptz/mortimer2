@@ -1,17 +1,16 @@
 // form handlers for application functions
 
-$(".app").submit(function(event){
+$(".mod_cred").submit(function(event){
     var form = $(this);
     if(form[0].button.value =="Show Creds"){
 
         $.post(
-            "/get_creds/",
+            "/mod_creds/",
             form.serializeArray(),
             function(response, textStatus, jqXHR){
                 form[0].parentNode.getElementsByClassName('creds')[0].innerHTML = response;
             });
         form[0].button.value ="Hide Creds";
-        jQuery.getScript("/static/js/creds_functions.js", function(data, textStatus, jqxhr){ });
         event.preventDefault();
     }
     else{
@@ -21,10 +20,10 @@ $(".app").submit(function(event){
     }
 });
 
-$(".rm").submit(function(event){
+$(".rm_cred").submit(function(event){
     var form = $(this);
     $.post(
-            "/remove/",
+            "/remove_creds/",
             form.serializeArray(),
             function(response, textStatus, jqXHR){
                 console.log(response);                  // for debugging only
@@ -32,10 +31,10 @@ $(".rm").submit(function(event){
     event.preventDefault();
 });
 
-$(".mk").submit(function(event){
+$(".mk_cred").submit(function(event){
     var form = $(this);
     $.post(
-            "/create/",
+            "/create_creds/",
             form.serializeArray(),
             function(response, textStatus, jqXHR){
                 console.log(response);                  // for debugging only

@@ -9,6 +9,9 @@ class AppID(models.Model):
     class Meta:
         unique_together = (("app_user","app_name"),)
 
+    def __unicode__(self):
+        return str(self.app_name)
+
 class AppData(models.Model):
     app_id = models.ForeignKey(AppID)
     username = models.CharField(max_length=25)
@@ -37,3 +40,5 @@ class AppData(models.Model):
     class Meta:
         unique_together = (("app_id","username"),)
 
+    def __unicode__(self):
+        return str(str(self.app_id)+" "+str(self.username))

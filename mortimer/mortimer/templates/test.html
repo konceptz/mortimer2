@@ -3,23 +3,29 @@
 {% block content %}
 
 {% for app in apps %}
-<form class="app">
-    <div>
-        {% csrf_token %}
-        name: {{ app.app_name }}, desc: {{ app.app_desc }},
-        <input type="hidden" name="id" value="{{app.id}}"/>
-        <input id="button" type="submit" value="Show Creds"/>
-        <div id="creds"></div>
-    </div>
-</form>
+<div>
+    <form class="app">
+        <div>
+            {% csrf_token %}
+            name: {{ app.app_name }}, desc: {{ app.app_desc }},
+            <input type="hidden" name="id" value="{{app.id}}"/>
+            <input id="button" type="submit" value="Show Creds"/>
+            <div id="creds"></div>
+        </div>
+    </form>
 
-<form class="rm">
-    <div>
-        {% csrf_token %}
-        <input type="hidden" name="id" value="{{app.id}}"/>
-        <input type="submit" value="Remove App"/>
+    <div class="creds">
+
     </div>
-</form>
+
+    <form class="rm">
+        <div>
+            {% csrf_token %}
+            <input type="hidden" name="id" value="{{app.id}}"/>
+            <input type="submit" value="Remove App"/>
+        </div>
+    </form>
+</div>
 {% endfor %}
 
 <br/>
@@ -36,6 +42,7 @@
 
 
 <script src="/static/js/app_functions.js"></script>
+
 
 {% endblock %}
 
